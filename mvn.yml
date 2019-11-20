@@ -3,5 +3,5 @@
   tasks:
     - name: install maven
       apt:
-        name: install maven
+        name: maven
         state: present
