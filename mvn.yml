@@ -2,6 +2,6 @@
   become: yes
   tasks:
     - name: install maven
-      apt:
+      package:
         name: maven
         state: present
