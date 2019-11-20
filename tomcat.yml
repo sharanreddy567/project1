@@ -1,0 +1,29 @@
+- hosts: ubuntu
+  become: yes
+  tasks:
+    - name: ensure group "tomcat" exists
+      group:
+        name: tomcat 
+        state: present
+    - name: add the user "tomcat" with a bash shell, apeending the group "tomcat"
+      user:
+        name: tomcat
+        shell: /bin/bash
+        group: tomcat
+        home: /opt/tomcat
+        append: yes
+    - name: download tomcat
+      get_url:
+        url: http://mirror.cc.columbia.edu/pub/software/apache/tomcat/tomcat-9/v9.0.10/bin/apache-tomcat-9.0.10.tar.gz
+        dest: /temp
+    - name: create directory
+      command: mkdir /opt/tomcat
+      register: tomcat
+    - name: install file
+      command: sudo tar xzvf apache-tomcat-9*tar.gz -C /opt/tomcat --strip-components=1
+      become: yes
+
+    - name: restart tomcat
+        name: tomcat
+        state: restarted
+      
